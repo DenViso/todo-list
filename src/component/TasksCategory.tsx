@@ -10,7 +10,10 @@ const TasksCategory = ({
 	setCategorys,
 	
 }: Tasks) => {
-	
+	const addCategory = () => {
+		const newCategory = [...categorys, categorys];
+		setCategorys(newCategory);
+	}
 	
 	return (
 		<div className="tasks">
