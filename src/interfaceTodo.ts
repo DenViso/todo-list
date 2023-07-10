@@ -4,3 +4,9 @@ export interface Todo{
   category?: string;
   isDone: boolean;
 }
+export interface Category{
+  id: string;
+  name: string;
+  color?: string;
+  
+}

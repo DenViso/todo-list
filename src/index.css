@@ -63,11 +63,21 @@ html{
   background-color: inherit;
 
 }
-
+.tasks-category{
+  display: flex;
+  gap: 10px;
+}
 .tasks-category__text{
   border: none;
   background-color: inherit;
   font-size: 2rem;
+}
+.category-del{
+padding: 3px 7px ;
+border: none;
+background-color: inherit;
+color: #90262652;
+text-shadow:0px 0px 8px  #d00c0cfa;
 }
 
 .tasks__but{
@@ -81,16 +91,18 @@ html{
 }
 .position-input{
   position: absolute;
-  right: -3px;
-  top: -3px;
+  right: 1px;
+  top: 3px;
 }
 .tasks-but__inp{
   width: 100%;
   border-radius: .225rem;
+  font-weight: 600;
   border: none;
-  background-color: #ababab59;
-  padding: .3125rem .625rem;
-  color: #fff;
+  background-color: #b0b0b059;
+  padding: .4125rem .725rem;
+  color: rgba(50, 50, 50, 0.7);
+  margin-top: 10px;
   /* display: ; */
 }
 .tasks-but__inp:focus{
@@ -104,7 +116,7 @@ html{
 .tasks-text{
   width: 75%;
   padding: 2.875rem;
-
+ 
 
 }
 
@@ -114,15 +126,17 @@ html{
   margin-bottom: 1.875rem;
   
 }
-
-.tasks-text__input{
-  width: 60%;
-
+.task-text__form{
   position:absolute;
+}
+.tasks-text__input{
+  width: 85%;
+
+  color: rgba(50, 50, 50, 0.7);
 
   border: none;
   background-color: #ababab56;
-
+  font-weight: 600;
   padding:.5125rem .825rem ;
   border-radius: .3125rem;
 
@@ -144,11 +158,14 @@ html{
   border-radius: 0.3125rem;
   background-color: inherit;
   color: #ABABAB;
-  font-size: 24px;
+  font-size: 30px;
+  font-weight: 500;
 }
-.pos-but{position: relative;
-  right: -447px;
-  top: -1px;}
+.pos-but{
+  position: relative;
+  right: 30px;
+  top: 4px;
+}
   
 .tasks-text__ul{
   width: 100%;
