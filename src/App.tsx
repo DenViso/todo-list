@@ -4,6 +4,8 @@ import { Todo, Category } from './interfaceTodo';
 import { nanoid } from 'nanoid';
 import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
 
+const colors:string[] = ['red', 'green', 'blue', 'orange', 'yellow'];
+
 
 function App() {
 
@@ -11,6 +13,7 @@ function App() {
   const [tasks, setTasks] = useState<string>('');
   const [categorys, setCategorys] = useState<Category[]>([{name:'', id:nanoid()}]);
   const [curentCategory, setCurentCategory] = useState<Category>(categorys[0]);
+  const [colorChoose, setColorChoose] = useState("gray")
 
   const onClicAddTodo = (event: React.FormEvent): void => {
     event.preventDefault();
@@ -58,22 +61,45 @@ function App() {
   }
 }
 
- const allTasksMap =  todo.map((item) => {
-  return (<div className="tasks-text__li" key={item.id}>
-    <input type="checkbox" checked={item.isDone} onClick={() => isDone(item.id)} />
-    <h2 className="tasks-text__label">{item.task}</h2>
-    <button onClick={() => onClicDeleteTodo(item.id)}>Delete</button>
-    {item.category && <span className="tasks-text__category" style={{backgroundColor: findColor(item.category)}}>{item.category}</span>}
-  </div>)
+
+const colorTasksMap =  colors.map((col)=>{
+  return <button key={col} 
+  // onClick={() => categorys.map((item) => item.color = col)}
+  onClick = {() => findColor(curentCategory.name)}
+    style={{backgroundColor: col}}
+     className = "collor" ></button>
 })
 
+
+
+ const allTasksMap =  todo.map((item) => {
+  return <div className="tasks-text__li" key={item.id}>
+    
+    <input type="checkbox" checked={item.isDone} onClick={() => isDone(item.id)} />
+    
+    <h2 className="tasks-text__label">{item.task}</h2>
+    
+    <button className="category-del del-position" onClick={() => onClicDeleteTodo(item.id)}></button>
+    
+    {item.category && <span className="tasks-text__category" style={{backgroundColor: findColor(item.category)}}>{item.category}</span>}
+    
+  </div>
+})
+
+
 const catTasksMap = todo.filter((item) => item.category === curentCategory.name).map((item) => {
-  return (<div className="tasks-text__li" key={item.id}>
+  return   <div className="tasks-text__li" key={item.id}>
+  
   <input type="checkbox" checked={item.isDone} onClick={() => isDone(item.id)} />
-  <h2 className="tasks-text__label">{item.task}</h2>
-  <button onClick={() => onClicDeleteTodo(item.id)}>Delete</button>
+
+  <div className="tasks-text__label ">{item.task}</div>
+
+  <button className="category-del del-position" onClick={() => onClicDeleteTodo(item.id)}></button>
+
   {item.category && <span className="tasks-text__category" style={{backgroundColor: findColor(item.category)}}>{item.category}</span>}
-</div>)
+  
+</div>
+
 })
 
 
@@ -90,8 +116,9 @@ const catTasksMap = todo.filter((item) => item.category === curentCategory.name)
           categorys={categorys}
           setCategorys={setCategorys}
           // onClicDeleteTodo = {onClicDeleteTodo}
-          // todo = {todo}
-          // setTodo = {setTodo}
+          todo = {todo}
+          setTodo = {setTodo}
+          colorTasksMap={colorTasksMap}
         />
         {/* main scrin */}
 
@@ -112,10 +139,12 @@ const catTasksMap = todo.filter((item) => item.category === curentCategory.name)
               <input className="tasks-text__input-but pos-but" type="submit" value="+" onClick={onClicAddTodo} />
             </form>
           </div>
+          
           <div className="tasks-text__ul">
           {curentCategory.name
           ? catTasksMap 
           : allTasksMap}
+          
           </div>
         </div>
       </div>
