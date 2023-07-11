@@ -4,7 +4,7 @@ import { Todo, Category } from './interfaceTodo';
 import { nanoid } from 'nanoid';
 import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
 
-const colors:string[] = ['red', 'green', 'blue', 'orange', 'yellow'];
+
 
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
     setTodo(newTodo);
    setTasks('');
   }
-  console.log(todo);
+ 
 
   const onClicDeleteTodo = (id: string) => {
     const newTodo = todo.filter((item) => item.id !== id);
@@ -62,20 +62,22 @@ function App() {
 }
 
 
-const colorTasksMap =  colors.map((col)=>{
-  return <button key={col} 
-  // onClick={() => categorys.map((item) => item.color = col)}
-  onClick = {() => findColor(curentCategory.name)}
-    style={{backgroundColor: col}}
-     className = "collor" ></button>
-})
+// const colorTasksMap =  colors.map((col)=>{
+//   return <button key={col} 
+//   // onClick={() => categorys.map((item) => item.color = col)}
+//   onClick = {() => setColorChoose(col)}
+//     style={{backgroundColor: col}}
+//      className = "collor" ></button>
+// })
 
 
 
  const allTasksMap =  todo.map((item) => {
   return <div className="tasks-text__li" key={item.id}>
     
-    <input type="checkbox" checked={item.isDone} onClick={() => isDone(item.id)} />
+    <input type="checkbox" 
+    // checked={item.isDone} 
+    onClick={() => isDone(item.id)} />
     
     <h2 className="tasks-text__label">{item.task}</h2>
     
@@ -90,7 +92,9 @@ const colorTasksMap =  colors.map((col)=>{
 const catTasksMap = todo.filter((item) => item.category === curentCategory.name).map((item) => {
   return   <div className="tasks-text__li" key={item.id}>
   
-  <input type="checkbox" checked={item.isDone} onClick={() => isDone(item.id)} />
+  <input type="checkbox" 
+  // checked={item.isDone}
+   onClick={() => isDone(item.id)} />
 
   <div className="tasks-text__label ">{item.task}</div>
 
@@ -118,15 +122,19 @@ const catTasksMap = todo.filter((item) => item.category === curentCategory.name)
           // onClicDeleteTodo = {onClicDeleteTodo}
           todo = {todo}
           setTodo = {setTodo}
-          colorTasksMap={colorTasksMap}
+          // colorTasksMap={colorTasksMap}
         />
         {/* main scrin */}
 
         <div className="tasks-text">
 
-          <h2 className="task-text__category">{curentCategory.name
+         <div className="title-tasks">
+         <h2 className="task-text__category">{curentCategory.name
           ?curentCategory.name
           :"All tasks"}</h2>
+          <div className="color" style={{backgroundColor: curentCategory.color}}></div>
+         </div>
+
 
           <div className="form">
             <form className="tasks-text__form">

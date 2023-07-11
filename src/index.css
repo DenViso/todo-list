@@ -55,8 +55,8 @@ html{
 
 }
 .collor{
-  width: 20px;
-   height: 20px;
+  width: 13px;
+   height: 13px;
    border-radius:50%;
    cursor:pointer;
    border:none;
@@ -139,7 +139,6 @@ background-repeat: no-repeat;
 .task-text__category{
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1.875rem;
   
 }
 .task-text__form{
@@ -252,4 +251,19 @@ top: 0px;
   color: #03030338;
   border-radius: .625rem;
   padding: .125rem .3125rem;
+}
+
+.title-tasks{
+  display: flex;
+  align-items: center;
+  gap:10px;
+  margin-bottom: 1.875rem;
+
+}
+.color{
+  width: 13px;
+  height: 13px;
+  background-color: #ABABAB ;
+  border-radius: 50%;
+
 }

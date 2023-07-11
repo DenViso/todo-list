@@ -1,7 +1,10 @@
 import { Category, Todo } from '../interfaceTodo';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,FC } from 'react';
 import { ReadonlyCollection } from 'typescript';
 import { nanoid } from 'nanoid';
+
+
+
 type TasksProps = {
 	categorys: Category[];
 	setCategorys: (categorys:Category[]) => void;
@@ -10,33 +13,53 @@ type TasksProps = {
 	// onClicDeleteTodo: (id: string) => void
 	todo: Todo[];
 	setTodo: (todo: Todo[]) => void
-	colorTasksMap:JSX.Element[]
+	
 }
-const TasksCategory = ({
+
+const colors:string[] = ['red', 'green', 'blue', 'orange', 'yellow'];
+
+const TasksCategory:FC<TasksProps> = ({
 	categorys,
 	setCategorys,
 	curentCategory,
 	setCurentCategory,
-	// onClicDeleteTodo,
 	todo,
 	setTodo,
-	colorTasksMap,
 
-}: TasksProps) => {
+
+}) => {
+
 const [newCategorys, setNewCategorys] = useState<string>('');
+const [colorChoose, setColorChoose] = useState("gray")
 
+
+
+
+const colorTasksMap =  colors.map((col,ind)=>{
+  return <button key={ind} 
+ 
+	onClick = {() => setColorChoose(col)}
+    style={{backgroundColor: col}}
+     className = "collor" ></button>
+})
 
 	const addCategory = (e:React.FormEvent) => {
 		e.preventDefault();
-		if(!newCategorys) {
-		return
-		} 
-
-		const newCatObj = {name:newCategorys, id: nanoid()};
+		if(newCategorys) {
+			
+		
+		const newCatObj = {
+			name:newCategorys, 
+			id: nanoid(),
+			color:colorChoose
+		};
 		const newCategory = [...categorys,newCatObj];
 		setCategorys(newCategory);
 		setNewCategorys('');
 		setCurentCategory(newCatObj);
+		setColorChoose("gray");
+		} 
+	
 	}
 
 	const chooseCategory = (cat:Category) =>{
@@ -53,8 +76,8 @@ const [newCategorys, setNewCategorys] = useState<string>('');
 
 	
 	const categoryRender = 	categorys.map((cat) => {return (
-		<div className="tasks-category">
-		<h2 className="tasks-category__text" onClick={() => chooseCategory(cat)} key={cat.id}>{cat.name}</h2>
+		<div className="tasks-category" key={cat.id}>
+		<h2 className="tasks-category__text" onClick={() => chooseCategory(cat)}>{cat.name}</h2>
 		{cat.name
 		?<button className= "category-del" onClick={() => deleteCategory()} ></button>
 		:null}
