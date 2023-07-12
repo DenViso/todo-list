@@ -233,7 +233,25 @@ top: 0px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+ 
     
+}
+.tasks-text__label.line{
+  text-decoration: line-through;
+}
+.tasks-text__label-inp{
+  width: inherit;
+  background-color: inherit;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border: none;
+    cursor:text ;
+}
+.tasks-text__label-inp:focus {
+  outline: none;
 }
 
 .tasks-text__but{
@@ -248,7 +266,8 @@ top: 0px;
 .tasks-text__category{
   font-size: 1.2rem;
   background-color: #ababab4a;
-  color: #03030338;
+  color: #030303db;
+  font-weight: 600;
   border-radius: .625rem;
   padding: .125rem .3125rem;
 }
@@ -265,5 +284,29 @@ top: 0px;
   height: 13px;
   background-color: #ABABAB ;
   border-radius: 50%;
+
+}
+
+.todo-change{
+  background-image: url(../public/image/change.png);
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-repeat: no-repeat;
+  background-color: inherit;
+}
+
+
+.checkbox-false{
+  width: 20px;
+  height: 20px;
+background-image: url(../public/image/false.png);
+appearance: none;
+background-size: contain;
+background-repeat: no-repeat;
+
+}
+.checkbox-false.true{
+background-image: url(../public/image/true.png);
 
 }

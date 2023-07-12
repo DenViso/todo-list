@@ -36,19 +36,18 @@ const [colorChoose, setColorChoose] = useState("gray")
 
 
 const colorTasksMap =  colors.map((col,ind)=>{
-  return <button key={ind} 
- 
-	onClick = {() => setColorChoose(col)}
-    style={{backgroundColor: col}}
-     className = "collor" ></button>
+  return<button
+	key={ind} 
+ 	onClick = {() => setColorChoose(col)}
+  style={{backgroundColor: col}}
+  className = "collor" >
+	</button>
 })
 
 	const addCategory = (e:React.FormEvent) => {
 		e.preventDefault();
 		if(newCategorys) {
-			
-		
-		const newCatObj = {
+				const newCatObj = {
 			name:newCategorys, 
 			id: nanoid(),
 			color:colorChoose
@@ -59,36 +58,52 @@ const colorTasksMap =  colors.map((col,ind)=>{
 		setCurentCategory(newCatObj);
 		setColorChoose("gray");
 		} 
-	
 	}
 
 	const chooseCategory = (cat:Category) =>{
 		setCurentCategory(cat)
 	}
 
-	const deleteCategory = () =>{
-		setCategorys(categorys.filter((item) => item.name !== curentCategory.name));
-		const newTodo = todo.filter((item) => item.category !== curentCategory.name);
+	const deleteCategory = (catId:string) =>{
+		const neededCategory = categorys.find((cat) => cat.id === catId);
+		setCategorys(categorys.filter((cat) => cat.id !== neededCategory?.id));
+		const newTodo = todo.filter((item) => item.category !== neededCategory?.name);
 		setTodo(newTodo);	
 		setCurentCategory({name:'', id:nanoid()});		
 	}
-
-
 	
-	const categoryRender = 	categorys.map((cat) => {return (
-		<div className="tasks-category" key={cat.id}>
-		<h2 className="tasks-category__text" onClick={() => chooseCategory(cat)}>{cat.name}</h2>
+	const categoryRender = 	categorys.map((cat) => {
+		return (
+		<div 
+		className="tasks-category"
+		 key={cat.id}>
+		<h2
+		className="tasks-category__text" 
+		style={{color:cat.color}}
+		 onClick={() => chooseCategory(cat)}>{cat.name}</h2>
 		{cat.name
-		?<button className= "category-del" onClick={() => deleteCategory()} ></button>
+		?<button 
+		className= "category-del" 
+		onClick={() => deleteCategory(cat.id)} >
+		</button>
 		:null}
 		</div>
 		)})
 
 	return (
-		<div className="tasks">
-			<h2 className="tasks-title__but" onClick={()=>setCurentCategory({name:'', id:nanoid()})}>All Tasks</h2>
-					{categoryRender}	
-			<form className="tasks-form"  onSubmit={addCategory}>
+		<div 
+		className="tasks">
+		
+			<h2 
+			className="tasks-title__but" 
+			onClick={()=>setCurentCategory({name:'', id:nanoid()})}>All Tasks</h2>
+			
+					{categoryRender }	
+			
+			<form 
+			className="tasks-form" 
+			 onSubmit={addCategory}>
+			
 				<input
 					type="text"
 					className="tasks-but__inp"
@@ -96,9 +111,15 @@ const colorTasksMap =  colors.map((col,ind)=>{
 					value={newCategorys}
 					onChange={(e) => setNewCategorys(e.target.value)}
 				/>
-				<input type="submit" value="+" className="tasks-text__input-but position-input" />
+			
+				<input 
+				type="submit" 
+				value="+" 
+				className="tasks-text__input-but position-input" />
 			</form>
-		<div className="color-cont">
+		
+		<div 
+		className="color-cont">
 			{newCategorys
 			?colorTasksMap
 		  :""}
