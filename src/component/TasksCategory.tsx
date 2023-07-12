@@ -107,7 +107,7 @@ const colorTasksMap =  colors.map((col,ind)=>{
 				<input
 					type="text"
 					className="tasks-but__inp"
-					placeholder="Add category"
+					placeholder="Add category (max 30)"
 					value={newCategorys}
 					onChange={(e) => setNewCategorys(e.target.value)}
 				/>

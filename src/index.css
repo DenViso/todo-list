@@ -44,7 +44,7 @@ html{
   width: 25%;
   height: 100%;
   border-right: .2rem solid #03030312;
-   
+  cursor: pointer; 
   padding: 3rem;
 
   display: flex;
@@ -68,13 +68,21 @@ html{
   gap: 10px;
 }
 .tasks-title__but{
-  font-size: 2.5rem;
-  font-weight: 700;
 
+  font-size: 2.5rem;
+  font-weight: 600;
+  cursor: pointer;
   border: none;
   background-color: inherit;
-
+transition: .3s;
 }
+.tasks-title__but:hover{
+  font-size: 2.55rem;
+  font-weight: 700;
+ 
+text-shadow: 0px 0px 10px gray;
+}
+
 .tasks-category{
   display: flex;
   gap: 10px;
@@ -83,8 +91,16 @@ html{
   border: none;
   background-color: inherit;
   font-size: 2rem;
+  transition: .5s ;
+}
+.tasks-category__text:hover{
+ 
+  font-weight: 700;
+  font-size: 2.2rem;
+  text-shadow: 0px 0px 10px gray;
 }
 .category-del{
+  cursor: pointer; 
   width: 20px;
   height: 30px;
 /* padding: 13px 7px ; */
@@ -111,14 +127,15 @@ background-repeat: no-repeat;
   top: 3px;
 }
 .tasks-but__inp{
-  width: 100%;
+  width: fit-content;
   border-radius: .225rem;
   font-weight: 600;
   border: none;
-  background-color: #b0b0b059;
-  padding: .4125rem .725rem;
+  /* background-color: #b0b0b059; */
+  /* padding: .4125rem ; */
   color: rgba(50, 50, 50, 0.7);
   margin-top: 10px;
+  cursor: pointer;
   /* display: ; */
 }
 .tasks-but__inp:focus{
@@ -146,7 +163,7 @@ background-repeat: no-repeat;
 }
 .tasks-text__input{
   width: 85%;
-
+  cursor: pointer; 
   color: rgba(50, 50, 50, 0.7);
 
   border: none;
@@ -166,7 +183,7 @@ background-repeat: no-repeat;
 }
 
 .tasks-text__input-but{
-  
+  cursor: pointer;
   width: 29px;
   height: 27px;
   border: none;
@@ -180,6 +197,7 @@ background-repeat: no-repeat;
   position: relative;
   right: 30px;
   top: 4px;
+  cursor: pointer; 
 }
   
 .tasks-text__ul{
@@ -191,6 +209,9 @@ background-repeat: no-repeat;
 
   overflow-y: scroll;
 }
+
+
+
 .tasks-text__ul::-webkit-scrollbar {
    padding-inline-start: 0rem;  
 }
@@ -203,11 +224,17 @@ background-repeat: no-repeat;
   flex-wrap: wrap;
 position: relative;
 width: fit-content;
+transition: .6s;
+}
+.tasks-text__li:hover{
+  gap:1.2rem;
+  box-shadow: gray;
 }
 .del-position{
 position: absolute;
 right: -20px;
 top: 0px;
+cursor: pointer; 
 }
 
 .tasks-text__chek{
@@ -233,9 +260,10 @@ top: 0px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
- 
+ transition: .5s;
     
 }
+
 .tasks-text__label.line{
   text-decoration: line-through;
 }
@@ -294,10 +322,12 @@ top: 0px;
   border: none;
   background-repeat: no-repeat;
   background-color: inherit;
+  cursor: pointer; 
 }
 
 
 .checkbox-false{
+  cursor: pointer; 
   width: 20px;
   height: 20px;
 background-image: url(../public/image/false.png);

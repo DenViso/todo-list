@@ -13,7 +13,7 @@ function App() {
   const [tasks, setTasks] = useState<string>('');
   const [categorys, setCategorys] = useState<Category[]>([{ name: '', id: nanoid() }]);
   const [curentCategory, setCurentCategory] = useState<Category>(categorys[0]);
-
+  const [newTask, setNewTask] = useState("");
 
   const onClicAddTodo = (event: React.FormEvent): void => {
     event.preventDefault();
@@ -36,9 +36,8 @@ function App() {
     setTasks('');
   }
   
-  const [newTask, setNewTask] = useState("");
   const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(event.target.value);
+     setNewTask(event.target.value);
   };
 
 
