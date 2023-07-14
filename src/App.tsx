@@ -3,6 +3,7 @@ import TasksCategory from './component/TasksCategory';
 import { Todo, Category } from './interfaceTodo';
 import { nanoid } from 'nanoid';
 import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
+import { valueToNode } from '@babel/types';
 
 
 
@@ -14,10 +15,30 @@ function App() {
   const [categorys, setCategorys] = useState<Category[]>([{ name: '', id: nanoid() }]);
   const [curentCategory, setCurentCategory] = useState<Category>(categorys[0]);
   const [newTask, setNewTask] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+ 
+    // =========== localStoreg
+
+    const getData = (): void => {
+      const todos = localStorage.getItem('data');
+      if ( typeof todos === "string")  {
+        setTodo(()=>{
+        return JSON.parse(todos)
+    }
+      )}
+    }
+    useEffect(()=>{
+      getData();
+    } ,[])
+
+   
+    
 
   const onClicAddTodo = (event: React.FormEvent): void => {
     event.preventDefault();
-    const newObject = curentCategory.name ? {
+
+    const newObject = curentCategory.name 
+    ? {
       id: nanoid(),
       task: tasks,
       isDone: false,
@@ -27,34 +48,60 @@ function App() {
       task: tasks,
       isDone: false,
     }
+
     const newTodo = [
       ...todo,
       newObject
     ]
 
     setTodo(newTodo);
+    localStorage.setItem("data", JSON.stringify(newTodo))
     setTasks('');
+
   }
   
-  const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-     setNewTask(event.target.value);
+  const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>, todoId:string) => {
+    //  setNewTask(event.target.value);
+    setTodo((prevToDo )=>{
+      return prevToDo.map((todo) =>{
+        if(todo.id === todoId){
+          return {
+            ...todo,
+            task:event.target.value,
+            isDone:false,
+
+          }
+        }else{
+          return todo
+        }
+
+      })
+    })
+    
   };
 
-
+  const editTask = ()=>{
+  setIsEdit(prev => !prev)    
+  }
   const changeTask = (id: string) => {
     const newTodo = todo.map((item) => {
       if (item.id === id) {
-        return { ...item, task: newTask };
+        return { 
+          ...item,
+           task: newTask, 
+           isDone: false,
+          };
       }
       return item;
     });
 
     setTodo(newTodo);
-    setNewTask(""); 
+    // setNewTask(""); 
   };
   const onClicDeleteTodo = (id: string) => {
     const newTodo = todo.filter((item) => item.id !== id);
-    setTodo(newTodo);
+    
+      setTodo(newTodo);
   }
 
   const isDone = (id: string) => {
@@ -76,24 +123,29 @@ function App() {
       }
   }
 
-  const todoIsTrue = todo.map((i)=>i.isDone);
 
-console.log(todoIsTrue);
+ 
+  // const todoIsTrue = todo.map((i)=>i.isDone);
 
 
-  // ==============================render
+
+  // ++++++++++++++++++++ render ++++++++++++++++++++++
+
+  // ============== render all task without category =========
   const allTasksMap = todo.map((item) => {
     return <div
       className="tasks-text__li"
       key={item.id}>
 
       <input 
-      className={ item.isDone ? "checkbox-false true":"checkbox-false "} 
+      className={ item.isDone 
+        ? "checkbox-false true"
+         :"checkbox-false "} 
       type="checkbox"
         // checked={item.isDone} 
       onClick={() => isDone(item.id)} />
 
-      {item.task
+      {!isEdit
         ? (
           <h2
            className={item.isDone
@@ -104,19 +156,23 @@ console.log(todoIsTrue);
             type="text"
             className="tasks-text__label-inp"
             placeholder="Add a new task"
-            value={newTask}
-            onChange={handleTaskChange}
+            value={item.task}
+            onChange={(e) => handleTaskChange(e, item.id)}
           />
         )}
 
       <button
-        className="category-del del-position"
+        className={isEdit
+          ?"category-del del-position"
+          :"category-del el-position bg"}
         onClick={() => onClicDeleteTodo(item.id)}>
       </button>
 
       <button
-        className='todo-change'
-        onClick={() => changeTask(item.id)}>
+        className={isEdit
+          ?"todo-change done"
+          :'todo-change'}
+        onClick={() => editTask()}>
       </button>
 
       {item.category
@@ -127,7 +183,7 @@ console.log(todoIsTrue);
     </div>
   })
   
-  
+  //==================== render task with category ===========
   const catTasksMap = todo.filter((item) => item.category === curentCategory.name).map((item) => {
     return <div
         className="tasks-text__li"
@@ -139,7 +195,7 @@ console.log(todoIsTrue);
         // checked={item.isDone}
         onClick={() => isDone(item.id)} />
 
-        {item.task
+        {!isEdit
 
         ? (
           <h2 
@@ -151,8 +207,8 @@ console.log(todoIsTrue);
             type="text"
             className="tasks-text__label-inp"
             placeholder="Add a new task"
-            value={newTask}
-            onChange={handleTaskChange}
+            value={item.task}
+            onChange={(e) => handleTaskChange(e, item.id)}
           />
         )}
 
@@ -161,8 +217,10 @@ console.log(todoIsTrue);
       </button>
 
       <button
-        className='todo-change'
-        onClick={() => changeTask(item.id)}>
+       className={isEdit
+        ?"todo-change done"
+        :'todo-change'}
+        onClick={() => editTask()}>
       </button>
 
       {item.category
@@ -173,8 +231,7 @@ console.log(todoIsTrue);
     </div>
 
   })
-      console.log(newTask);
-      console.log(todo.map((i)=>i.isDone));
+    
 
 
 
