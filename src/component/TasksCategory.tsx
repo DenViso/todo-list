@@ -1,6 +1,5 @@
 import { Category, Todo } from '../interfaceTodo';
-import React, { useState, useEffect, FC } from 'react';
-import { ReadonlyCollection } from 'typescript';
+import React, { useState, FC } from 'react';
 import { nanoid } from 'nanoid';
 
 
@@ -10,7 +9,6 @@ type TasksProps = {
 	setCategorys: (categorys: Category[]) => void;
 	curentCategory: Category;
 	setCurentCategory: (curentCategory: Category) => void;
-	// onClicDeleteTodo: (id: string) => void
 	todo: Todo[];
 	setTodo: (todo: Todo[]) => void
 
@@ -38,9 +36,6 @@ const TasksCategory: FC<TasksProps> = ({
 	const [newCategorys, setNewCategorys] = useState<string>('');
 	const [colorChoose, setColorChoose] = useState("gray")
 
-
-
-
 	const colorTasksMap = colors.map((col, ind) => {
 		return <button
 			key={ind}
@@ -49,38 +44,6 @@ const TasksCategory: FC<TasksProps> = ({
 			className="collor" >
 		</button>
 	})
-
-	// const getData = (): void => {
-	// 	const newCategorys = localStorage.getItem('data');
-	// 	if ( typeof newCategorys === "string")  {
-	// 		setNewCategorys(()=>{
-	// 		return JSON.parse(newCategorys)
-	// }
-	// 	)}
-	// }
-	// useEffect(()=>{
-	// 	getData();
-	// } ,[])
-	const getData = (): void => {
-		const newCategory = localStorage.getItem('data');
-		if (typeof newCategory === "string") {
-			setNewCategorys(() => {
-				return JSON.parse(newCategory)
-			}
-			)
-		}
-	}
-	useEffect(() => {
-		getData();
-	}, [])
-
-
-	console.log(categorys);
-	console.log(curentCategory);
-	console.log(newCategorys);
-
-
-
 
 	const addCategory = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -95,24 +58,27 @@ const TasksCategory: FC<TasksProps> = ({
 				...categorys,
 				newCatObj];
 
-			localStorage.setItem("data", JSON.stringify(newCategory))
 			setCategorys(newCategory);
 			setNewCategorys('');
 			setCurentCategory(newCatObj);
 			setColorChoose("gray");
+			localStorage.setItem("category", JSON.stringify(newCategory))
 		}
 	}
 
 	const chooseCategory = (cat: Category) => {
 		setCurentCategory(cat)
-
 	}
 
 	const deleteCategory = (catId: string) => {
+	
 		const neededCategory = categorys.find((cat) => cat.id === catId);
-		setCategorys(categorys.filter((cat) => cat.id !== neededCategory?.id));
+		const newCategory = (categorys.filter((cat) => cat.id !== neededCategory?.id));
+		setCategorys(newCategory)
+		localStorage.setItem("category", JSON.stringify(newCategory))
 		const newTodo = todo.filter((item) => item.category !== neededCategory?.name);
 		setTodo(newTodo);
+		localStorage.setItem("todo", JSON.stringify(newTodo))
 		setCurentCategory({ name: '', id: nanoid() });
 	}
 	// ++++++++++++++++ Render category +++++++++++++++++++

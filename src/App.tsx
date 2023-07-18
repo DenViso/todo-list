@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TasksCategory from './component/TasksCategory';
 import { Todo, Category } from './interfaceTodo';
 import { nanoid } from 'nanoid';
-import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
-import { valueToNode } from '@babel/types';
+
 
 
 
@@ -16,38 +15,41 @@ function App() {
   const [curentCategory, setCurentCategory] = useState<Category>(categorys[0]);
   const [newTask, setNewTask] = useState("");
   const [isEdit, setIsEdit] = useState(false);
- 
-    // =========== localStoreg
 
-    const getData = (): void => {
-      const todos = localStorage.getItem('data');
-      if ( typeof todos === "string")  {
-        setTodo(()=>{
-        return JSON.parse(todos)
-    }
-      )}
-    }
-    useEffect(()=>{
-      getData();
-    } ,[])
+  // =========== localStoreg
 
-   
-    
+  const getData = (): void => {
+    const todos = localStorage.getItem('todo');
+    const categorys = localStorage.getItem('category');
+    if (todos) {
+      setTodo(JSON.parse(todos))
+    }
+    if (categorys) {
+      setCategorys(JSON.parse(categorys))
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
+
+
+
 
   const onClicAddTodo = (event: React.FormEvent): void => {
     event.preventDefault();
 
-    const newObject = curentCategory.name 
-    ? {
-      id: nanoid(),
-      task: tasks,
-      isDone: false,
-      category: curentCategory.name,
-    } : {
-      id: nanoid(),
-      task: tasks,
-      isDone: false,
-    }
+    const newObject = curentCategory.name
+      ? {
+        id: nanoid(),
+        task: tasks,
+        isDone: false,
+        category: curentCategory.name,
+      } : {
+        id: nanoid(),
+        task: tasks,
+        isDone: false,
+      }
 
     const newTodo = [
       ...todo,
@@ -55,53 +57,53 @@ function App() {
     ]
 
     setTodo(newTodo);
-    localStorage.setItem("data", JSON.stringify(newTodo))
+    localStorage.setItem("todo", JSON.stringify(newTodo))
     setTasks('');
 
   }
-  
-  const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>, todoId:string) => {
+  const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>, todoId: string) => {
     //  setNewTask(event.target.value);
-    setTodo((prevToDo )=>{
-      return prevToDo.map((todo) =>{
-        if(todo.id === todoId){
-          return {
-            ...todo,
-            task:event.target.value,
-            isDone:false,
-
-          }
-        }else{
-          return todo
-        }
-
-      })
-    })
-    
+  
+    const newTodo = (prevTodo: Todo[]) => prevTodo.map((t) => {
+      if (t.id === todoId) {
+        return {
+          ...t,
+          task: event.target.value,
+          isDone: false,
+        };
+      } else {
+        return t;
+      }
+    });
+  
+    setTodo(newTodo(todo));
+    localStorage.setItem("todo", JSON.stringify(newTodo(todo)));
   };
-
-  const editTask = ()=>{
-  setIsEdit(prev => !prev)    
+  
+  const editTask = () => {
+    setIsEdit(prev => !prev)
   }
   const changeTask = (id: string) => {
     const newTodo = todo.map((item) => {
       if (item.id === id) {
-        return { 
+        return {
           ...item,
-           task: newTask, 
-           isDone: false,
-          };
+          task: newTask,
+          isDone: false,
+        };
       }
       return item;
     });
 
     setTodo(newTodo);
+    localStorage.setItem("todo", JSON.stringify(newTodo))
     // setNewTask(""); 
   };
+
   const onClicDeleteTodo = (id: string) => {
     const newTodo = todo.filter((item) => item.id !== id);
-    
-      setTodo(newTodo);
+    setTodo(newTodo);
+    localStorage.setItem("todo", JSON.stringify(newTodo))
   }
 
   const isDone = (id: string) => {
@@ -112,22 +114,17 @@ function App() {
       return item;
     })
     setTodo(newTodo);
+    localStorage.setItem("todo", JSON.stringify(newTodo))
   }
 
   const findColor = (catName: string) => {
     const catObj = categorys.find((item) => item.name === catName);
-      if (catObj?.color) {
-        return catObj.color;
-      } else {
-        return "gray"
-      }
+    if (catObj?.color) {
+      return catObj.color;
+    } else {
+      return "gray"
+    }
   }
-
-
- 
-  // const todoIsTrue = todo.map((i)=>i.isDone);
-
-
 
   // ++++++++++++++++++++ render ++++++++++++++++++++++
 
@@ -137,20 +134,20 @@ function App() {
       className="tasks-text__li"
       key={item.id}>
 
-      <input 
-      className={ item.isDone 
-        ? "checkbox-false true"
-         :"checkbox-false "} 
-      type="checkbox"
+      <input
+        className={item.isDone
+          ? "checkbox-false true"
+          : "checkbox-false "}
+        type="checkbox"
         // checked={item.isDone} 
-      onClick={() => isDone(item.id)} />
+        onClick={() => isDone(item.id)} />
 
       {!isEdit
         ? (
           <h2
-           className={item.isDone
-            ?"tasks-text__label line"
-            :"tasks-text__label"}>{item.task}</h2>
+            className={item.isDone
+              ? "tasks-text__label line"
+              : "tasks-text__label"}>{item.task}</h2>
         ) : (
           <input
             type="text"
@@ -163,15 +160,15 @@ function App() {
 
       <button
         className={isEdit
-          ?"category-del del-position"
-          :"category-del el-position bg"}
+          ? "category-del del-position"
+          : "category-del el-position bg"}
         onClick={() => onClicDeleteTodo(item.id)}>
       </button>
 
       <button
         className={isEdit
-          ?"todo-change done"
-          :'todo-change'}
+          ? "todo-change done"
+          : 'todo-change'}
         onClick={() => editTask()}>
       </button>
 
@@ -182,26 +179,26 @@ function App() {
 
     </div>
   })
-  
+
   //==================== render task with category ===========
   const catTasksMap = todo.filter((item) => item.category === curentCategory.name).map((item) => {
     return <div
-        className="tasks-text__li"
-        key={item.id}>
+      className="tasks-text__li"
+      key={item.id}>
 
-        <input
-        className={ item.isDone ? "checkbox-false true":"checkbox-false "} 
+      <input
+        className={item.isDone ? "checkbox-false true" : "checkbox-false "}
         type="checkbox"
         // checked={item.isDone}
         onClick={() => isDone(item.id)} />
 
-        {!isEdit
+      {!isEdit
 
         ? (
-          <h2 
-          className={item.isDone
-            ?"tasks-text__label line"
-            :"tasks-text__label"}>{item.task}</h2>
+          <h2
+            className={item.isDone
+              ? "tasks-text__label line"
+              : "tasks-text__label"}>{item.task}</h2>
         ) : (
           <input
             type="text"
@@ -217,25 +214,22 @@ function App() {
       </button>
 
       <button
-       className={isEdit
-        ?"todo-change done"
-        :'todo-change'}
+        className={isEdit
+          ? "todo-change done"
+          : 'todo-change'}
         onClick={() => editTask()}>
       </button>
 
       {item.category
         && <span
-        className="tasks-text__category"
-        style={{ backgroundColor: findColor(item.category) }}>{item.category}</span>}
+          className="tasks-text__category"
+          style={{ backgroundColor: findColor(item.category) }}>{item.category}</span>}
 
     </div>
 
   })
-    
 
-
-
-      // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   return (
     <div className="App">
       <div className="wrapper">
