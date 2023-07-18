@@ -364,18 +364,20 @@ background-image: url(../public/image/true.png);
 
 @media (max-width: 800px) {
 .wrapper {
-  width: 60.75rem;
+  width: 100%;
   height: 100vh;
   flex-direction: column;
   align-items: flex-start;
 }
 .tasks-text {
   width: 100%;
+  height: 50vh;
   padding: 0rem;
+  overflow-y: scroll;
 }
 .tasks {
   width: 100%;
-  height: 100%;
+  height: 50vh;
   overflow-y: scroll;
   border-right: none;
 }
