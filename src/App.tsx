@@ -79,20 +79,7 @@ function App() {
   const editTask = () => {
     setIsEdit(prev => !prev)
   }
-  // const changeTask = (id: string) => {
-  //   const newTodo = todo.map((item) => {
-  //     if (item.id === id) {
-  //       return {
-  //         ...item,
-  //         task: newTask,
-  //         isDone: false,
-  //       };
-  //     }
-  //     return item;
-  //   });
-  //   setTodo(newTodo);
-  //   localStorage.setItem("todo", JSON.stringify(newTodo))
-  // };
+
 
   const onClicDeleteTodo = (id: string) => {
     const newTodo = todo.filter((item) => item.id !== id);
@@ -278,8 +265,12 @@ function App() {
             {curentCategory.name
               ? catTasksMap
               : allTasksMap}
-
           </div>
+          <div className="about">
+            <a href="https://github.com/DenViso/todo-list">
+              Created by DenViso
+            </a>
+          </div>        
         </div>
       </div>
     </div>

@@ -39,6 +39,8 @@ html{
   box-shadow: 0rem 0rem 2.5rem rgba(0, 0, 0, 0.5);
 
   display: flex;
+
+  position: relative;
  }
 /* category csrin styling */
 .tasks{
@@ -52,7 +54,7 @@ html{
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 0.7rem;
+  gap: .7rem;
 
 }
 .collor{
@@ -128,14 +130,14 @@ text-shadow: 0rem 0rem .625rem red;
 .position-input{
   position: absolute;
   right: 1rem;
-  top: 0.6rem;
+  top: .6rem;
 }
 .tasks-but__inp{
   width: fit-content;
-  border-radius: 0.3125rem;
+  border-radius: .3125rem;
   font-weight: 600;
   border: none;
-  padding: 0.5125rem 0.825rem;
+  padding: .5125rem .825rem;
   color: rgba(50, 50, 50, 0.7);
   background-color: #ababab56;
   margin-top: .45rem;
@@ -191,7 +193,7 @@ text-shadow: 0rem 0rem .625rem red;
   width: 1.8125rem;
   height: 1.6875rem;
   border: none;
-  border-radius: 0.3125rem;
+  border-radius: .3125rem;
   background-color: inherit;
   color: #ABABAB;
   font-size: 2rem;
@@ -224,7 +226,7 @@ text-shadow: 0rem 0rem .625rem red;
   justify-content: center;
   align-items: center;
   text-align: center;
-  gap: 0.625rem;
+  gap: .625rem;
   flex-wrap: wrap;
   position: relative;
   width: -moz-fit-content;
@@ -360,9 +362,28 @@ background-repeat: no-repeat;
 background-image: url(../public/image/true.png);
 
 }
+.about>a{
+  width: fit-content;
+  padding: 5px 10px; 
+position: absolute;
+right: 1.5em;
+bottom: 1.5rem;
+
+color: #ABABAB60;
+}
+.about>a:hover{
+  width: fit-content;
+  padding: 5px 10px; 
+  color: #11808081;
+  text-shadow: 0px 5px 13px #d9dc0c;
+  font-weight: 600;
+  font-size: 12px;
+  transform: rotate(360deg);
+  transition: transform 2s;
+}
 
 
-@media (max-width: 800px) {
+@media (max-width: 50rem) {
 .wrapper {
   width: 100%;
   height: 100vh;
