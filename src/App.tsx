@@ -13,7 +13,6 @@ function App() {
   const [tasks, setTasks] = useState<string>('');
   const [categorys, setCategorys] = useState<Category[]>([{ name: '', id: nanoid() }]);
   const [curentCategory, setCurentCategory] = useState<Category>(categorys[0]);
-  const [newTask, setNewTask] = useState("");
   const [isEdit, setIsEdit] = useState(false);
 
   // =========== localStoreg
@@ -62,20 +61,17 @@ function App() {
 
   }
   const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>, todoId: string) => {
-    //  setNewTask(event.target.value);
-  
-    const newTodo = (prevTodo: Todo[]) => prevTodo.map((t) => {
-      if (t.id === todoId) {
+      const newTodo = (prevTodo: Todo[]) => prevTodo.map((todo) => {
+      if (todo.id === todoId) {
         return {
-          ...t,
+          ...todo,
           task: event.target.value,
           isDone: false,
         };
       } else {
-        return t;
+        return todo;
       }
     });
-  
     setTodo(newTodo(todo));
     localStorage.setItem("todo", JSON.stringify(newTodo(todo)));
   };
@@ -83,22 +79,20 @@ function App() {
   const editTask = () => {
     setIsEdit(prev => !prev)
   }
-  const changeTask = (id: string) => {
-    const newTodo = todo.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          task: newTask,
-          isDone: false,
-        };
-      }
-      return item;
-    });
-
-    setTodo(newTodo);
-    localStorage.setItem("todo", JSON.stringify(newTodo))
-    // setNewTask(""); 
-  };
+  // const changeTask = (id: string) => {
+  //   const newTodo = todo.map((item) => {
+  //     if (item.id === id) {
+  //       return {
+  //         ...item,
+  //         task: newTask,
+  //         isDone: false,
+  //       };
+  //     }
+  //     return item;
+  //   });
+  //   setTodo(newTodo);
+  //   localStorage.setItem("todo", JSON.stringify(newTodo))
+  // };
 
   const onClicDeleteTodo = (id: string) => {
     const newTodo = todo.filter((item) => item.id !== id);
@@ -126,9 +120,8 @@ function App() {
     }
   }
 
-  // ++++++++++++++++++++ render ++++++++++++++++++++++
-
-  // ============== render all task without category =========
+                       // ++++++++++++++++++++ RENDER ++++++++++++++++++++++
+                // ============== render all task without category =========
   const allTasksMap = todo.map((item) => {
     return <div
       className="tasks-text__li"
@@ -180,7 +173,8 @@ function App() {
     </div>
   })
 
-  //==================== render task with category ===========
+
+          //==================== render task with category ===========
   const catTasksMap = todo.filter((item) => item.category === curentCategory.name).map((item) => {
     return <div
       className="tasks-text__li"
@@ -229,7 +223,7 @@ function App() {
 
   })
 
-  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   return (
     <div className="App">
       <div className="wrapper">
@@ -261,7 +255,6 @@ function App() {
             </div>
 
           </div>
-
 
           <div className="form">
 

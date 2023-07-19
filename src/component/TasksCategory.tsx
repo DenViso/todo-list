@@ -25,7 +25,7 @@ const colors: string[] = [
 const TasksCategory: FC<TasksProps> = ({
 	categorys,
 	setCategorys,
-	curentCategory,
+	// curentCategory,
 	setCurentCategory,
 	todo,
 	setTodo,
@@ -81,6 +81,7 @@ const TasksCategory: FC<TasksProps> = ({
 		localStorage.setItem("todo", JSON.stringify(newTodo))
 		setCurentCategory({ name: '', id: nanoid() });
 	}
+
 	// ++++++++++++++++ Render category +++++++++++++++++++
 	const categoryRender = categorys.map((cat) => {
 		return (
@@ -105,15 +106,13 @@ const TasksCategory: FC<TasksProps> = ({
 		<div
 			className="tasks">
 
-			<h2
-				className="tasks-title__but"
+			<h2 className="tasks-title__but"
 				onClick={() => setCurentCategory({ name: '', id: nanoid() })}>
-				All Tasks</h2>
+				All Tasks
+			</h2>
 			{categoryRender}
 
-			<form
-				className="tasks-form"
-				onSubmit={addCategory}>
+			<form	className="tasks-form" onSubmit={addCategory}>
 
 				<input
 					type="text"
@@ -127,14 +126,14 @@ const TasksCategory: FC<TasksProps> = ({
 				<input
 					type="submit"
 					value="+"
-					className="tasks-text__input-but position-input" />
+					className="tasks-text__input-but position-input" 
+				/>
 			</form>
 
-			<div
-				className="color-cont">
+			<div className="color-cont">
 				{newCategorys
-					? colorTasksMap
-					: ""}
+				? colorTasksMap
+				: ""}
 			</div>
 		</div>
 	);
