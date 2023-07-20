@@ -15,6 +15,7 @@ function App() {
   const [curentCategory, setCurentCategory] = useState<Category>(categorys[0]);
   const [isEdit, setIsEdit] = useState(false);
 
+
   // =========== localStoreg
 
   const getData = (): void => {
@@ -27,13 +28,9 @@ function App() {
       setCategorys(JSON.parse(categorys))
     }
   }
-
   useEffect(() => {
     getData();
   }, [])
-
-
-
 
   const onClicAddTodo = (event: React.FormEvent): void => {
     event.preventDefault();
@@ -44,6 +41,7 @@ function App() {
         task: tasks,
         isDone: false,
         category: curentCategory.name,
+        color:curentCategory.color,
       } : {
         id: nanoid(),
         task: tasks,
@@ -60,6 +58,7 @@ function App() {
     setTasks('');
 
   }
+
   const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>, todoId: string) => {
       const newTodo = (prevTodo: Todo[]) => prevTodo.map((todo) => {
       if (todo.id === todoId) {
@@ -79,7 +78,6 @@ function App() {
   const editTask = () => {
     setIsEdit(prev => !prev)
   }
-
 
   const onClicDeleteTodo = (id: string) => {
     const newTodo = todo.filter((item) => item.id !== id);
@@ -124,12 +122,13 @@ function App() {
 
       {!isEdit
         ? (
-          <h2
+          <h2 style={{ color: curentCategory.color }}
             className={item.isDone
               ? "tasks-text__label line"
               : "tasks-text__label"}>{item.task}</h2>
         ) : (
           <input
+          style={{ color: curentCategory.color }}
             type="text"
             className="tasks-text__label-inp"
             placeholder="Add a new task"
@@ -176,13 +175,14 @@ function App() {
       {!isEdit
 
         ? (
-          <h2
+          <h2 style={{ color: curentCategory.color }}
             className={item.isDone
-              ? "tasks-text__label line"
-              : "tasks-text__label"}>{item.task}</h2>
+              ? "tasks-text__label line "
+              : "tasks-text__label"}>{item.task }</h2>
         ) : (
           <input
             type="text"
+            style={{ color: curentCategory.color }}
             className="tasks-text__label-inp"
             placeholder="Add a new task"
             value={item.task}
@@ -231,7 +231,7 @@ function App() {
 
           <div className="title-tasks">
 
-            <h2
+            <h2 style={{ color: curentCategory.color }}
               className="task-text__category">{curentCategory.name
                 ? curentCategory.name
                 : "All tasks"}</h2>

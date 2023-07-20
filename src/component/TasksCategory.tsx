@@ -15,12 +15,12 @@ type TasksProps = {
 }
 
 const colors: string[] = [
-	'rgb(235, 116, 52)',
-	'rgb(54, 130, 36)',
-	'rgb(36, 110, 130)',
-	'rgb(36, 67, 13)',
-	'rgb(83, 36, 130)',
-	'rgb(130, 36, 78)'];
+	'rgb(237, 53, 40)',
+	'rgb(240, 114, 5)',
+	'rgb(5, 240, 107)',
+	'rgb(5, 197, 240)',
+	'rgb(112, 83, 176)',
+	'rgb(227, 27, 150)'];
 
 const TasksCategory: FC<TasksProps> = ({
 	categorys,
@@ -34,7 +34,7 @@ const TasksCategory: FC<TasksProps> = ({
 }) => {
 
 	const [newCategorys, setNewCategorys] = useState<string>('');
-	const [colorChoose, setColorChoose] = useState("gray")
+	const [colorChoose, setColorChoose] = useState("rgb(50 50 50 / 70%)")
 
 	const colorTasksMap = colors.map((col, ind) => {
 		return <button
@@ -61,7 +61,7 @@ const TasksCategory: FC<TasksProps> = ({
 			setCategorys(newCategory);
 			setNewCategorys('');
 			setCurentCategory(newCatObj);
-			setColorChoose("gray");
+			setColorChoose("rgb(50 50 50 / 70%)");
 			localStorage.setItem("category", JSON.stringify(newCategory))
 		}
 	}
@@ -71,8 +71,7 @@ const TasksCategory: FC<TasksProps> = ({
 	}
 
 	const deleteCategory = (catId: string) => {
-	
-		const neededCategory = categorys.find((cat) => cat.id === catId);
+			const neededCategory = categorys.find((cat) => cat.id === catId);
 		const newCategory = (categorys.filter((cat) => cat.id !== neededCategory?.id));
 		setCategorys(newCategory)
 		localStorage.setItem("category", JSON.stringify(newCategory))
@@ -88,8 +87,7 @@ const TasksCategory: FC<TasksProps> = ({
 			<div
 				className="tasks-category"
 				key={cat.id}>
-				<h2
-					className="tasks-category__text"
+				<h2	className="tasks-category__text"
 					style={{ color: cat.color }}
 					onClick={() => chooseCategory(cat)}>{cat.name}</h2>
 				{cat.name
@@ -103,8 +101,7 @@ const TasksCategory: FC<TasksProps> = ({
 	})
 
 	return (
-		<div
-			className="tasks">
+		<div className="tasks">
 
 			<h2 className="tasks-title__but"
 				onClick={() => setCurentCategory({ name: '', id: nanoid() })}>
@@ -135,6 +132,7 @@ const TasksCategory: FC<TasksProps> = ({
 				? colorTasksMap
 				: ""}
 			</div>
+			{/* <span className="bb"></span> */}
 		</div>
 	);
 };
