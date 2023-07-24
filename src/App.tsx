@@ -112,7 +112,8 @@ function App() {
       className="tasks-text__li"
       key={item.id}>
 
-      <input
+    <div className="cont">
+    <input
         className={item.isDone
           ? "checkbox-false true"
           : "checkbox-false "}
@@ -136,6 +137,7 @@ function App() {
             onChange={(e) => handleTaskChange(e, item.id)}
           />
         )}
+    </div>
 
       <button
         className={isEdit
@@ -166,6 +168,7 @@ function App() {
       className="tasks-text__li"
       key={item.id}>
 
+      <div className="cont">
       <input
         className={item.isDone ? "checkbox-false true" : "checkbox-false "}
         type="checkbox"
@@ -189,6 +192,7 @@ function App() {
             onChange={(e) => handleTaskChange(e, item.id)}
           />
         )}
+      </div>
 
       <button className="category-del del-position"
         onClick={() => onClicDeleteTodo(item.id)}>
